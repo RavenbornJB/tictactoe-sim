@@ -3,4 +3,4 @@ project(tictactoe_sim)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(tictactoe_sim src/Board.cpp src/main.cpp)
+add_executable(tictactoe_sim src/Player.cpp src/Board.cpp src/main.cpp)
