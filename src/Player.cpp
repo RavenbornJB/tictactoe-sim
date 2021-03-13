@@ -12,10 +12,11 @@ std::pair<int, int> HumanPlayer::get_move(Board &board) {
 
     std::cout << "Please enter your move (formatted as \"x y\"): ";
     std::cin >> x >> y; // TODO handle incorrectly formatted inputs (згадати б як)
+    // на числа, на щоб все введено було, на числа 0<x,y<2
     std::cout << std::endl;
     auto move = std::make_pair(x, y);
     while (!board.check_availability(move)) {
-        std::cout << "Please enter your move (formatted as \"x y\"): ";
+        std::cout << "That cell is already occupied! Please enter your move (formatted as \"x y\"): ";
         std::cin >> x >> y;
         std::cout << std::endl;
         move = std::make_pair(x, y);
@@ -25,6 +26,7 @@ std::pair<int, int> HumanPlayer::get_move(Board &board) {
 
 std::pair<int, int> MinimaxAIPlayer::get_move(Board &board) {
     // TODO implement minimax
+    // я можу зробити
     return std::make_pair(1, 1); // center
 }
 
