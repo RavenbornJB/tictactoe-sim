@@ -74,7 +74,7 @@ int Board::insert_symbol(pair<int, int> coordinates, int symbol_idx){
         return 1;
     }
 }
-vector<pair<int, int>> Board::get_all_available_moves() {
+vector<pair<int, int>> Board::get_all_available_cells() {
     vector<pair<int, int>> result;
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
