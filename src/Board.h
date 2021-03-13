@@ -12,9 +12,9 @@ using std::pair;
 
 class Board{
 private:
-    vector<vector<int>> board{{0, 0, 1},
-                              {1, 0, 2},
-                              {1, 0, 1}};
+    vector<vector<int>> board{{0, 0, 0},
+                              {0, 0, 0},
+                              {0, 0, 0}};
     vector<char> symbols{'_', 'X', 'O'};
 
 public:
