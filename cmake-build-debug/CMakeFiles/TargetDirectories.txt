@@ -1,3 +1,0 @@
-/cygdrive/c/Users/black/Documents/uni/unicode/aks/tictactoe-sim/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/c/Users/black/Documents/uni/unicode/aks/tictactoe-sim/cmake-build-debug/CMakeFiles/tictactoe_sim.dir
-/cygdrive/c/Users/black/Documents/uni/unicode/aks/tictactoe-sim/cmake-build-debug/CMakeFiles/edit_cache.dir
