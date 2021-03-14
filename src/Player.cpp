@@ -7,12 +7,19 @@
 
 #include "Player.h"
 
-Player::Player(int player_symbol_idx, int opponent_symbol_idx) {
+Player::Player(int player_symbol_idx, int opponent_symbol_idx, std::string &strat) {
     this->player_symbol_idx = player_symbol_idx;
     this->opponent_symbol_idx = opponent_symbol_idx;
+    this->strat = strat;
 }
 
-std::pair<int, int> HumanPlayer::get_move(Board &board) {
+std::pair<int, int> Player::get_move(Board &board) {
+    if (strat == "h") return human_get_move(board);
+    if (strat == "ma") return minimax_get_move(board);
+    if (strat == "ra") return random_get_move(board);
+}
+
+std::pair<int, int> Player::human_get_move(Board &board) {
     std::string x_ipt, y_ipt;
     int x, y;
 
@@ -39,15 +46,15 @@ std::pair<int, int> HumanPlayer::get_move(Board &board) {
 }
 
 
-std::pair<int, int> MinimaxAIPlayer::get_move(Board &board) {
+std::pair<int, int> Player::minimax_get_move(Board &board) {
     auto free_cells = board.get_all_available_moves();
     std::pair<int, int> best_move = free_cells[0];
     int evaluation_cost = INT_MIN;
     for (auto move: free_cells){
-        int move_cost = evaluate_move(board, move, opponent_symbol_idx, false);
+        int move_cost = minimax_evaluate_move(board, move, opponent_symbol_idx, false);
         if (move.second == 0) {
             std::cout << move.first << "---" << move.second << std::endl;
-            int x = evaluate_move(board, move, player_symbol_idx, false);
+            int x = minimax_evaluate_move(board, move, player_symbol_idx, false);
             std::cout << move_cost << " --cost" << std::endl;
         }
 //        if (move.second == 1) {
@@ -66,7 +73,7 @@ std::pair<int, int> MinimaxAIPlayer::get_move(Board &board) {
     return best_move;
 }
 
-int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates, int symbol_idx, bool is_maximizer) {
+int Player::minimax_evaluate_move(Board &board, std::pair<int, int> coordinates, int symbol_idx, bool is_maximizer) {
     // making a move first:
     board.insert_symbol(coordinates, symbol_idx);
 
@@ -96,7 +103,7 @@ int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates
 //        int best_move_value = INT_MIN;
         int best_move_value = -1000;
         for (auto move: available_cells){
-            int move_score = evaluate_move(board, move, 1  + (symbol_idx % 2), !is_maximizer);
+            int move_score = minimax_evaluate_move(board, move, 1  + (symbol_idx % 2), !is_maximizer);
             best_move_value = std::max(move_score, best_move_value);
         }
 
@@ -107,7 +114,7 @@ int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates
 //        int best_move_value = INT_MAX;
         int best_move_value = 1000;
         for (auto move: available_cells){
-            int move_score = evaluate_move(board, move, (symbol_idx + 1) % 2, !is_maximizer);
+            int move_score = minimax_evaluate_move(board, move, (symbol_idx + 1) % 2, !is_maximizer);
             best_move_value = std::min(move_score, best_move_value);
         }
 
@@ -116,7 +123,7 @@ int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates
     }
 }
 
-std::pair<int, int> RandomAIPlayer::get_move(Board &board) {
+std::pair<int, int> Player::random_get_move(Board &board) {
     auto available_cells = board.get_all_available_moves();
 
     std::srand(time(0)); // uh could be much better
