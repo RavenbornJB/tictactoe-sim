@@ -59,7 +59,6 @@ std::pair<int, int> MinimaxAIPlayer::get_move(Board &board) {
             evaluation_cost = move_cost;
         }
     }
-    std::cout << "EVALUATION for the best move:: " << evaluation_cost << std::endl;
     return best_move;
 }
 
@@ -103,6 +102,7 @@ int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates
         return best_move_value;
     }
 }
+
 
 std::pair<int, int> Player::random_get_move(Board &board) {
     auto available_cells = board.get_all_available_moves();
