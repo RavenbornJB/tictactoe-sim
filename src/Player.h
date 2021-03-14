@@ -26,8 +26,9 @@ class HumanPlayer: public Player {
 
 class MinimaxAIPlayer: public Player {
     private:
-        std::pair<int, int> maximize_move(Board &board, int symbol_idx);
+//        int evaluate_move(Board &board, std::pair<int, int> coordinates, int symbol_idx, bool is_maximizer);
     public:
+        int evaluate_move(Board &board, std::pair<int, int> coordinates, int symbol_idx, bool is_maximizer);
         std::pair<int, int> get_move(Board &board) override;
         MinimaxAIPlayer(int player_symbol_idx, int opponent_symbol_idx) : Player(player_symbol_idx, opponent_symbol_idx){
         }

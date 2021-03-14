@@ -7,6 +7,10 @@
 
 #include "Player.h"
 
+Player::Player(int player_symbol_idx, int opponent_symbol_idx) {
+    this->player_symbol_idx = player_symbol_idx;
+    this->opponent_symbol_idx = opponent_symbol_idx;
+}
 
 std::pair<int, int> HumanPlayer::get_move(Board &board) {
     std::string x_ipt, y_ipt;
@@ -36,16 +40,80 @@ std::pair<int, int> HumanPlayer::get_move(Board &board) {
 
 
 std::pair<int, int> MinimaxAIPlayer::get_move(Board &board) {
-    auto available_cells = board.get_all_available_moves();
-
-
-    return std::make_pair(1, 1); // center
+    auto free_cells = board.get_all_available_moves();
+    std::pair<int, int> best_move = free_cells[0];
+    int evaluation_cost = INT_MIN;
+    for (auto move: free_cells){
+        int move_cost = evaluate_move(board, move, opponent_symbol_idx, false);
+        if (move.second == 0) {
+            std::cout << move.first << "---" << move.second << std::endl;
+            int x = evaluate_move(board, move, player_symbol_idx, false);
+            std::cout << move_cost << " --cost" << std::endl;
+        }
+//        if (move.second == 1) {
+//            std::cout << move.first << "---" << move.second << std::endl;
+//            int x = evaluate_move(board, move, player_symbol_idx, false);
+//            std::cout << move_cost << " --cost" << std::endl;
+//        }
+//        if (move_cost == 4)
+//            std::cout << move.first << "-" << move.second << std::endl;
+        if (evaluation_cost < move_cost) {
+            best_move = move;
+            evaluation_cost = move_cost;
+        }
+    }
+    std::cout << "EVALUATION for the best move:: " << evaluation_cost << std::endl;
+    return best_move;
 }
 
-std::pair<int, int> MinimaxAIPlayer::maximize_move(Board &board, int symbol_idx) {
-    int best_move_value = INT_MIN;
+int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates, int symbol_idx, bool is_maximizer) {
+    // making a move first:
+    board.insert_symbol(coordinates, symbol_idx);
 
-//    return std::pair<int, int>(1, 1);
+
+    auto available_cells = board.get_all_available_moves();
+    int depth = 9;
+    depth -= available_cells.size(); // how deep in the tree are we
+
+
+    // checking if it's a win firstly:
+    if (board.check_win(coordinates)) {
+        board.reset_symbol(coordinates);
+
+        if (symbol_idx == player_symbol_idx)
+            return -depth;
+        return depth;
+//        board.reset_symbol(coordinates);
+//        return is_maximizer ? -depth : depth;
+    }
+    // if it's not a winning situation, and there are no available cells, then it's a draw
+    if (available_cells.empty()) {
+        board.reset_symbol(coordinates);
+        return 0;
+    }
+
+    if (is_maximizer) {
+//        int best_move_value = INT_MIN;
+        int best_move_value = -1000;
+        for (auto move: available_cells){
+            int move_score = evaluate_move(board, move, 1  + (symbol_idx % 2), !is_maximizer);
+            best_move_value = std::max(move_score, best_move_value);
+        }
+
+        board.reset_symbol(coordinates); // clearing the board afterwards, so it is the same as before calling this func
+        return best_move_value;
+    }
+    else {
+//        int best_move_value = INT_MAX;
+        int best_move_value = 1000;
+        for (auto move: available_cells){
+            int move_score = evaluate_move(board, move, (symbol_idx + 1) % 2, !is_maximizer);
+            best_move_value = std::min(move_score, best_move_value);
+        }
+
+        board.reset_symbol(coordinates); // clearing the board afterwards, so it is the same as before calling this func
+        return best_move_value;
+    }
 }
 
 std::pair<int, int> RandomAIPlayer::get_move(Board &board) {
@@ -57,7 +125,3 @@ std::pair<int, int> RandomAIPlayer::get_move(Board &board) {
     return available_cells[idx];
 }
 
-Player::Player(int player_symbol_idx, int opponent_symbol_idx) {
-    this->player_symbol_idx = player_symbol_idx;
-    this->opponent_symbol_idx = opponent_symbol_idx;
-}
