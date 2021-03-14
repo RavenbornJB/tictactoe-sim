@@ -23,6 +23,8 @@ void Board::print_board() {
 bool Board::check_win(pair<int, int> last_symbol) { // returns 1 if it is a winning move, 0 otherwise
     int column = last_symbol.first;
     int row = last_symbol.second;
+//    if (board[column][row] == 0)
+//        return false;
     // checking horizontal:
     int win = 1;
     for (int i = 0; i < 3; ++i) {

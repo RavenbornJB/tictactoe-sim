@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/Work/tictactoe-sim/src/Board.cpp
+iostream
+-
+vector
+-
+Board.h
+/mnt/Work/tictactoe-sim/src/Board.h
+
+/mnt/Work/tictactoe-sim/src/Board.h
+vector
+-
+
+/mnt/Work/tictactoe-sim/src/GameManager.cpp
+iostream
+-
+string
+-
+GameManager.h
+/mnt/Work/tictactoe-sim/src/GameManager.h
+
+/mnt/Work/tictactoe-sim/src/GameManager.h
+string
+-
+Board.h
+/mnt/Work/tictactoe-sim/src/Board.h
+Player.h
+/mnt/Work/tictactoe-sim/src/Player.h
+
+/mnt/Work/tictactoe-sim/src/Player.h
+ctime
+-
+string
+-
+Board.h
+/mnt/Work/tictactoe-sim/src/Board.h
+

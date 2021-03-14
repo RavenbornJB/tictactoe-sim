@@ -41,18 +41,18 @@ void GameManager::play() {
         if (moving_player == 1) move = p1.get_move(game_board);
         else move = p2.get_move(game_board); // TODO doable in one line by array of the 2 players?
 
+
+        game_board.insert_symbol(move, moving_player);
         if (game_board.check_win(move)) {
             std::cout << "Player " << turn % 2 + 1 << " wins! Final board:" << std::endl;
-            game_board.insert_symbol(move, moving_player);
             game_board.print_board();
             break;
         }
 
-        game_board.insert_symbol(move, moving_player);
-
         ++turn;
         if (turn == 9) {
             std::cout << "Draw!" << std::endl;
+            game_board.print_board();
             break;
         }
     }
