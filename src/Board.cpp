@@ -74,6 +74,11 @@ int Board::insert_symbol(pair<int, int> coordinates, int symbol_idx){
         return 1;
     }
 }
+
+void Board::reset_symbol(pair<int, int> coordinates){
+    board[coordinates.first][coordinates.second] = 0; // just resets the symbol in this cell to zero
+}
+
 vector<pair<int, int>> Board::get_all_available_moves() {
     vector<pair<int, int>> result;
     for (int i = 0; i < 3; ++i) {

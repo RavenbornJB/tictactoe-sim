@@ -11,22 +11,35 @@
 
 class Player {
     public:
+        int player_symbol_idx;
+        int opponent_symbol_idx;
         virtual std::pair<int, int> get_move(Board &board) = 0;
+        Player(int player_symbol_idx, int opponent_symbol_idx);
 };
 
 class HumanPlayer: public Player {
     public:
         std::pair<int, int> get_move(Board &board) override;
+        HumanPlayer(int player_symbol_idx, int opponent_symbol_idx) : Player(player_symbol_idx, opponent_symbol_idx){
+        }
 };
 
 class MinimaxAIPlayer: public Player {
+    private:
+        std::pair<int, int> maximize_move(Board &board, int symbol_idx);
     public:
         std::pair<int, int> get_move(Board &board) override;
+        MinimaxAIPlayer(int player_symbol_idx, int opponent_symbol_idx) : Player(player_symbol_idx, opponent_symbol_idx){
+        }
+
+
 };
 
 class RandomAIPlayer: public Player {
     public:
         std::pair<int, int> get_move(Board &board) override;
+        RandomAIPlayer(int player_symbol_idx, int opponent_symbol_idx) : Player(player_symbol_idx, opponent_symbol_idx){
+        }
 };
 
 #endif //TICTACTOE_SIM_PLAYER_H

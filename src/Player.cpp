@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <ctime>
+#include <climits>
 
 #include "Player.h"
 
@@ -33,10 +34,18 @@ std::pair<int, int> HumanPlayer::get_move(Board &board) {
     }
 }
 
+
 std::pair<int, int> MinimaxAIPlayer::get_move(Board &board) {
-    // TODO implement minimax
-    // я можу зробити
+    auto available_cells = board.get_all_available_moves();
+
+
     return std::make_pair(1, 1); // center
+}
+
+std::pair<int, int> MinimaxAIPlayer::maximize_move(Board &board, int symbol_idx) {
+    int best_move_value = INT_MIN;
+
+//    return std::pair<int, int>(1, 1);
 }
 
 std::pair<int, int> RandomAIPlayer::get_move(Board &board) {
@@ -46,4 +55,9 @@ std::pair<int, int> RandomAIPlayer::get_move(Board &board) {
     int idx = std::rand() % available_cells.size();
 
     return available_cells[idx];
+}
+
+Player::Player(int player_symbol_idx, int opponent_symbol_idx) {
+    this->player_symbol_idx = player_symbol_idx;
+    this->opponent_symbol_idx = opponent_symbol_idx;
 }

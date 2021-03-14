@@ -22,6 +22,7 @@ public:
     bool check_win(pair<int, int> last_symbol);
     bool check_availability(pair<int, int> coordinates);
     int insert_symbol(pair<int, int> coordinates, int symbol_idx);
+    void reset_symbol(pair<int, int> coordinates);
     vector<pair<int, int>> get_all_available_moves();
 };
 
