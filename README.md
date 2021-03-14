@@ -3,4 +3,8 @@
 - [Yarema Mishchenko](https://github.com/ravenbornjb)
 - [Maxym Kuzyshyn](https://github.com/maxymkuz)
 
-## TBA
+## Usage
+
+Compile with the given CMake.
+
+Upon starting the program, you will be guided by the command line prompts.
