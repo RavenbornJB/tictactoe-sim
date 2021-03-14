@@ -7,12 +7,19 @@
 
 #include "Player.h"
 
-Player::Player(int player_symbol_idx, int opponent_symbol_idx) {
+Player::Player(int player_symbol_idx, int opponent_symbol_idx, std::string &strat) {
     this->player_symbol_idx = player_symbol_idx;
     this->opponent_symbol_idx = opponent_symbol_idx;
+    this->strat = strat;
 }
 
-std::pair<int, int> HumanPlayer::get_move(Board &board) {
+std::pair<int, int> Player::get_move(Board &board) {
+    if (strat == "h") return human_get_move(board);
+    if (strat == "ma") return minimax_get_move(board);
+    if (strat == "ra") return random_get_move(board);
+}
+
+std::pair<int, int> Player::human_get_move(Board &board) {
     std::string x_ipt, y_ipt;
     int x, y;
 
@@ -97,7 +104,7 @@ int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates
     }
 }
 
-std::pair<int, int> RandomAIPlayer::get_move(Board &board) {
+std::pair<int, int> Player::random_get_move(Board &board) {
     auto available_cells = board.get_all_available_moves();
 
     std::srand(time(0)); // uh could be much better
