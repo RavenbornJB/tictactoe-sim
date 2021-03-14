@@ -46,13 +46,13 @@ std::pair<int, int> Player::human_get_move(Board &board) {
 }
 
 
-std::pair<int, int> MinimaxAIPlayer::get_move(Board &board) {
+std::pair<int, int> Player::minimax_get_move(Board &board) {
     auto free_cells = board.get_all_available_moves();
 
     std::pair<int, int> best_move = free_cells[0];
     int evaluation_cost = INT_MIN;
     for (auto move: free_cells){
-        int move_cost = evaluate_move(board, move, player_symbol_idx);
+        int move_cost = minimax_evaluate_move(board, move, player_symbol_idx);
 
         if (evaluation_cost < move_cost) {
             best_move = move;
@@ -62,7 +62,7 @@ std::pair<int, int> MinimaxAIPlayer::get_move(Board &board) {
     return best_move;
 }
 
-int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates, int symbol_idx) {
+int Player::minimax_evaluate_move(Board &board, std::pair<int, int> coordinates, int symbol_idx) {
     // making a move first:
     board.insert_symbol(coordinates, symbol_idx);
     auto available_cells = board.get_all_available_moves();
@@ -84,7 +84,7 @@ int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates
     if (symbol_idx == player_symbol_idx) {
         int best_move_value = INT_MIN;
      for (auto move: available_cells){
-            int move_score = evaluate_move(board, move, player_symbol_idx);
+            int move_score = minimax_evaluate_move(board, move, player_symbol_idx);
             best_move_value = std::max(move_score, best_move_value);
         }
 
@@ -94,7 +94,7 @@ int MinimaxAIPlayer::evaluate_move(Board &board, std::pair<int, int> coordinates
     else {
         int best_move_value = INT_MAX;
         for (auto move: available_cells){
-            int move_score = evaluate_move(board, move, opponent_symbol_idx);
+            int move_score = minimax_evaluate_move(board, move, opponent_symbol_idx);
             best_move_value = std::min(move_score, best_move_value);
         }
 
